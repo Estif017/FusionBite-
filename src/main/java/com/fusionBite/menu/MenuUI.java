@@ -1,11 +1,20 @@
 package com.fusionBite.menu;
 
+import com.fusionBite.menu.pizzaMenu.PizzaMenu;
+
+import java.util.Scanner;
+
 public class MenuUI {
+    static Scanner scanner = new Scanner(System.in);
     public static void menu(){
-        System.out.println("1) Add [Item] (Sandwich/Pizza/Taco/Custom Item)\n" +
-                "2) Add Drink\n" +
-                "3) Add [Side] (Chips/Garlic Knots/Chips & Salsa/Main Side)\n" +
-                "4) Checkout\n" +
-                "0) Cancel Order - delete the order and go back to the home page");
+        System.out.println("\tmenu\n1.pizza\n2.sandwich\n3.taco\n4.taco");
+        System.out.print("Enter your choice:");
+        boolean running = true;
+        while(running){
+            int choice = scanner.nextInt();
+            switch (choice){
+                case 1 -> PizzaMenu.pizzaMenuDisplay();
+            }
+        }
     }
 }
