@@ -13,7 +13,7 @@ public class MenuUI {
         while(running){
             int choice = scanner.nextInt();
             switch (choice){
-                case 1 -> PizzaMenu.pizzaMenuDisplay();
+                case 1 -> PizzaMenu.startOrder();
             }
         }
     }

@@ -9,9 +9,8 @@ public class PizzaMenu extends MenuItem {
         super(size, type, meets, cheese, regularToppings, sauces);
     }
 
-    public static void pizzaMenuDisplay(){
-        Scanner scanner = new Scanner(System.in);
-        Map<String,Object> orderDetail = new HashMap<>();
+    public static Map<String,Object> pizzaMenuDisplay(Scanner scanner){
+        Map<String,Object> orderDetails = new HashMap<>();
         double price = 0;
         StringBuilder summary = new StringBuilder("Your Choice\n");
 
@@ -30,7 +29,7 @@ public class PizzaMenu extends MenuItem {
             case "16" -> { size = "16\""; price += 16.50; }
             default -> { System.out.println("Invalid size. Defaulting to 12\"."); size = "12\""; price += 12.00; }
         }
-        orderDetail.put("size",size);
+        orderDetails.put("size",size);
         summary.append("Size:").append(size).append("\n");
         System.out.println(summary);
 
@@ -41,13 +40,18 @@ public class PizzaMenu extends MenuItem {
 
         List<String>  validCrusts = List.of("thin","regular","thick","cauliflower");
         String crust = validCrusts.contains(crustChoice) ? crustChoice:"regular";
-        orderDetail.put("crust",crust);
+        orderDetails.put("crust",crust);
         summary.append("Crust: ").append(crust).append("\n");
-        System.out.println(summary);
+
+        //---Stuffed Crust ---
+        System.out.print("Would you like stuffed crust? (+$2.00) (yes/no): ");
+        String stuffed = scanner.nextLine().trim().toLowerCase();
+        boolean hasStuffCrust = stuffed.equals("yes");
+        if(hasStuffCrust) price+=2.00;
+        orderDetails.put("stuffedCrust",hasStuffCrust?"Yes":"No");
 
         //---Adjusting pricing for size----
-        double extraMeatPrice =0;
-        double extraCheesePrice = 0;
+        double extraMeatPrice,extraCheesePrice;
         switch (size){
             case "8\"" -> { extraMeatPrice = 1.00; extraCheesePrice = 0.75; }
             case "12\"" -> { extraMeatPrice = 2.00; extraCheesePrice = 1.50; }
@@ -57,10 +61,39 @@ public class PizzaMenu extends MenuItem {
         String[] meats =  {"pepperoni", "sausage", "ham", "bacon", "chicken", "meatball"};
         List<String> selectedMeats = getUserSelections(scanner,meats,"meats");
         price+=calculateExtraCoast(selectedMeats.size(),extraMeatPrice);
-        orderDetail.put("meats",selectedMeats);
-        summary.append("Meats: ").append(selectedMeats).append("\n");
+        orderDetails.put("meats",selectedMeats);
+        summary.append("Meats: ").append(selectedMeats).append("\n").append("Price: "+price).append("\n");
         System.out.println(summary);
 
+        //--- Cheese ---
+        String[] cheese = { "mozzarella", "parmesan", "ricotta", "goat cheese", "buffalo" };
+        List<String> selectedCheese = getUserSelections(scanner,cheese,"cheese");
+        price+=calculateExtraCoast(selectedCheese.size(),extraCheesePrice);
+        orderDetails.put("cheese",selectedCheese);
+        summary.append("Cheese: ").append(selectedCheese).append("\n").append("Price: "+price).append("\n");
+        System.out.println(summary);
+
+        // --- Regular Toppings ---
+        String[] toppings = { "onions", "mushrooms", "bell peppers", "olives", "tomatoes", "spinach", "basil", "pineapple", "anchovies" };
+        List<String> selectedToppings = getUserSelections(scanner, toppings, "toppings");
+        orderDetails.put("toppings", selectedToppings);
+        summary.append("Toppings: ").append(selectedToppings).append("\n");
+        System.out.println(summary);
+
+        // --- Sauces ---
+        String[] sauces = { "marinara", "alfredo", "pesto", "bbq", "buffalo", "olive oil" };
+        List<String> selectedSauces = getUserSelections(scanner, sauces, "sauces");
+        orderDetails.put("sauces", selectedSauces);
+        summary.append("Sauces: ").append(selectedSauces).append("\n");
+
+        // --- Final Summary ---
+        orderDetails.put("price", price);
+        summary.append("Total Price: $").append(String.format("%.2f", price)).append("\n");
+
+        System.out.println("\n=== ORDER SUMMARY ===");
+        System.out.println(summary);
+
+        return orderDetails;
     }
 
     public static List<String> getUserSelections(Scanner scanner,String[] options,String label){
@@ -88,5 +121,47 @@ public class PizzaMenu extends MenuItem {
     public static double calculateExtraCoast(int itemCount,double extraprice){
         if(itemCount<=1) return 0;
         return (itemCount-1)*extraprice;
+    }
+
+
+    public static void startOrder(){
+        Scanner scanner = new Scanner(System.in);
+        List<Map<String,Object>> orderList = new ArrayList<>();
+        double orderTotal = 0;
+
+        System.out.print("How many pizzas would you like to order? (0 or more): ");
+        int pizzaCount = scanner.nextInt();
+        scanner.nextLine();
+
+        if(pizzaCount==0){
+            System.out.println("You must order garlic knots or a drink if you order no pizzas.");
+            System.out.print("Would you like garlic knots ($4.00) or a drink ($2.50)? ");
+            String item = scanner.nextLine().trim().toLowerCase();
+            if(item.contains("garlic")){
+                orderTotal+=4.00;
+                System.out.println("Added garlic knots to your order.");
+            } else if (item.contains("drink")) {
+                orderTotal+=2.50;
+                System.out.println("Added drink to your order.");
+            }else{
+                System.out.println("Invalid choice — no order placed.");
+                return;
+            }
+            System.out.printf("Order total: $%.2f\n", orderTotal);
+            return;
+        }
+        //If customer orders pizzas
+        for(int i=1;i<=pizzaCount;i++){
+            System.out.println("\n--- Pizza #" + i + " ---");
+            Map<String, Object> pizza = pizzaMenuDisplay(scanner);
+            orderList.add(pizza);
+            orderTotal+=(double) pizza.get("price");
+        }
+
+        System.out.println("\"\\n=== ORDER SUMMARY ===\"");
+        for(int i = 0; i<orderList.size();i++){
+            System.out.println("Pizza #" + (i + 1) + ": " + orderList.get(i));
+        }
+        System.out.printf("Total Order Price: $%.2f\n", orderTotal);
     }
 }
