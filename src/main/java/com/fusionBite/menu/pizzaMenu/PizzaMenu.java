@@ -1,6 +1,7 @@
 package com.fusionBite.menu.pizzaMenu;
 
 import com.fusionBite.menu.MenuItem;
+import com.fusionBite.menu.MenuUI;
 
 import java.util.*;
 
@@ -86,6 +87,15 @@ public class PizzaMenu extends MenuItem {
         orderDetails.put("sauces", selectedSauces);
         summary.append("Sauces: ").append(selectedSauces).append("\n");
 
+        //--- Ask if the user wants a drink ----
+        System.out.println("Would you like to add a drink?");
+        String drink = scanner.nextLine().toLowerCase().trim();
+        boolean isThereAdrink = drink.equals("yes");
+        if(isThereAdrink){
+            orderDetails.put("Drink","yes");
+            price+=2.50;
+        }
+
         // --- Final Summary ---
         orderDetails.put("price", price);
         summary.append("Total Price: $").append(String.format("%.2f", price)).append("\n");
@@ -163,5 +173,6 @@ public class PizzaMenu extends MenuItem {
             System.out.println("Pizza #" + (i + 1) + ": " + orderList.get(i));
         }
         System.out.printf("Total Order Price: $%.2f\n", orderTotal);
+        MenuUI.menu();
     }
 }
