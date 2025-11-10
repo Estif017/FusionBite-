@@ -14,13 +14,25 @@ public class MenuLoader {
     public static void loadMenuData(){
         Gson gson = new Gson();
         try(FileReader reader = new FileReader("src/main/resources/menu.json")) {
-            Type type = new TypeToken<ArrayList<MenuItem>>(){}.getType();
-            ArrayList<MenuItem> menuItems = gson.fromJson(reader,type);
+            Type type = new TypeToken<Map<String,Object>>() {}.getType();
+            menuData = gson.fromJson(reader,type);
             System.out.println("✅ Menu Loaded Successfully:");
-            menuItems.forEach(System.out::println);
+            System.out.println(menuData.keySet());
         } catch (IOException e) {
             System.err.println("❌ Error loading menu: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    public static Map<String,Object> getMenuData(){
+        return menuData;
+    }
+
+    public static Map<String,Object> getSection(String sectionName){
+        if(menuData == null){
+            System.err.println("⚠️ Menu data not loaded. Call loadMenuData() first.");
+            return null;
+        }
+        return (Map<String, Object>) menuData.get(sectionName);
     }
 }

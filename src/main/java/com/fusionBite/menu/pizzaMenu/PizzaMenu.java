@@ -1,14 +1,54 @@
 package com.fusionBite.menu.pizzaMenu;
 
 import com.fusionBite.menu.MenuItem;
+import com.fusionBite.menu.MenuLoader;
 import com.fusionBite.menu.MenuUI;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.*;
 
+//import static com.fusionBite.menu.MenuLoader.menuData;
+
 public class PizzaMenu extends MenuItem {
+    private Scanner scanner = new Scanner(System.in);
     public PizzaMenu(String size, String type, String[] meets, String[] cheese, String[] regularToppings, String[] sauces ) {
         super(size, type, meets, cheese, regularToppings, sauces);
     }
+
+    public static void loadPizzaMenu(){
+        MenuLoader.loadMenuData();
+        Map<String,Object> pizzaMenu = MenuLoader.getSection("Pizza Menu");
+        if(pizzaMenu==null){
+            System.out.println("❌ Pizza menu could not be loaded. Check JSON file.");
+            return;
+        }
+        System.out.println("🍕 Pizza Menu:");
+        System.out.println("-----------------------------");
+
+        Map<String, Object> orderDetails = new HashMap<>();
+        double totalPrice=0.0;
+
+        //--Size---
+        Map<String,Object> sizes = (Map<String, Object>) pizzaMenu.get("sizes");
+        System.out.println("Available Sizes");
+        for (String sizeKey:sizes.keySet()){
+            Map<String,Object> sizeDetails = (Map<String, Object>) sizes.get(sizeKey);//{basePrice=8.5, meatPrice=1.0, cheesePrice=0.75}
+            double basePrice = ((Number) sizeDetails.get("basePrice")).doubleValue();
+            System.out.printf("  %-4s - $%.2f%n", sizeKey, basePrice);
+        }
+
+        //--- Meats----
+        List<String> meats = (List<String>) pizzaMenu.get("meats");
+        System.out.println("\nPremium Meats: ");
+        System.out.println("  " + String.join(", ", meats));
+    }
+
+
+
 
     public static Map<String,Object> pizzaMenuDisplay(Scanner scanner){
         Map<String,Object> orderDetails = new HashMap<>();
@@ -16,11 +56,11 @@ public class PizzaMenu extends MenuItem {
         StringBuilder summary = new StringBuilder("Your Choice\n");
 
         //--- Size Selection ----
-        System.out.println("Sizes:");
-        System.out.println("8\"  - $8.50");
-        System.out.println("12\" - $12.00");
-        System.out.println("16\" - $16.50");
-        System.out.print("Choose your size (8, 12, 16): ");
+//        System.out.println("Sizes:");
+//        System.out.println("8\"  - $8.50");
+//        System.out.println("12\" - $12.00");
+//        System.out.println("16\" - $16.50");
+//        System.out.print("Choose your size (8, 12, 16): ");
 
         String sizeChoice = scanner.nextLine().trim();
         String size = "";
@@ -163,9 +203,10 @@ public class PizzaMenu extends MenuItem {
         //If customer orders pizzas
         for(int i=1;i<=pizzaCount;i++){
             System.out.println("\n--- Pizza #" + i + " ---");
-            Map<String, Object> pizza = pizzaMenuDisplay(scanner);
-            orderList.add(pizza);
-            orderTotal+=(double) pizza.get("price");
+//            Map<String, Object> pizza = pizzaMenuDisplay(scanner);
+//            orderList.add(pizza);
+//            orderTotal+=(double) pizza.get("price");
+            loadPizzaMenu();
         }
 
         System.out.println("\"\\n=== ORDER SUMMARY ===\"");
