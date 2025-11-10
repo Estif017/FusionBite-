@@ -1,0 +1,97 @@
+{
+  "Sandwich Menu": {
+    "sizes": {
+      "4\"": {
+        "basePrice": 5.50,
+        "meatPrice": 1.00,
+        "extraMeatPrice": 1.00,
+        "cheesePrice": 0.75,
+        "extraCheesePrice": 0.30,
+        "regularToppings": "included",
+        "sauces": "included"
+      },
+      "8\"": {
+        "basePrice": 7.00,
+        "meatPrice": 2.00,
+        "extraMeatPrice": 1.00,
+        "cheesePrice": 1.50,
+        "extraCheesePrice": 0.60,
+        "regularToppings": "included",
+        "sauces": "included"
+      },
+      "12\"": {
+        "basePrice": 8.50,
+        "meatPrice": 3.00,
+        "extraMeatPrice": 1.50,
+        "cheesePrice": 2.25,
+        "extraCheesePrice": 0.90,
+        "regularToppings": "included",
+        "sauces": "included"
+      }
+    },
+    "bread": ["white", "wheat", "rye", "wrap"],
+    "meats": ["steak", "ham", "salami", "roast beef", "chicken", "bacon"],
+    "regularToppings": ["lettuce", "peppers", "onions", "tomatoes", "jalapeños", "cucumbers", "pickles", "guacamole", "mushrooms"],
+    "sauces": ["mayo", "mustard", "ranch", "chipotle", "honey mustard"]
+  },
+
+  "Drinks": {
+    "small": 2.00,
+    "medium": 2.50,
+    "large": 3.00
+  },
+
+  "Side Items": {
+    "Chips": 1.50,
+    "Garlic Knots": 1.50,
+    "Chips & Salsa": 1.50,
+    "Main Side": 1.50
+  },
+
+  "Pizza Menu": {
+    "sizes": {
+      "8\"": {
+        "basePrice": 8.50,
+        "meatPrice": 1.00,
+        "cheesePrice": 0.75
+      },
+      "12\"": {
+        "basePrice": 12.00,
+        "meatPrice": 2.00,
+        "cheesePrice": 1.50
+      },
+      "16\"": {
+        "basePrice": 16.50,
+        "meatPrice": 3.00,
+        "cheesePrice": 2.25
+      }
+    },
+    "meats": ["pepperoni", "sausage", "ham", "bacon", "chicken", "meatball"],
+    "cheeses": ["mozzarella", "parmesan", "ricotta", "goat cheese", "buffalo"],
+    "regularToppings": ["onions", "mushrooms", "bell peppers", "olives", "tomatoes", "spinach", "basil", "pineapple", "anchovies"],
+    "sauces": ["marinara", "alfredo", "pesto", "bbq", "buffalo", "olive oil"]
+  },
+
+  "Taco Menu": {
+    "sizes": {
+      "Single": {
+        "basePrice": 3.50,
+        "meatPrice": 1.00,
+        "cheesePrice": 0.75
+      },
+      "3-Taco": {
+        "basePrice": 9.00,
+        "meatPrice": 2.00,
+        "cheesePrice": 1.50
+      },
+      "Burrito": {
+        "basePrice": 8.50,
+        "meatPrice": 3.00,
+        "cheesePrice": 2.25
+      }
+    },
+    "meats": ["chicken", "beef", "pork", "steak", "shrimp"],
+    "regularToppings": ["lettuce", "tomato", "onion", "cilantro", "cheese", "sour cream"],
+    "sauces": ["salsa", "hot sauce", "guacamole", "crema"]
+  }
+}
