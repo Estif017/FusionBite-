@@ -1,67 +1,86 @@
 package com.fusionBite.menu;
 
-public class MenuItem {
+import java.util.ArrayList;
+import java.util.List;
+
+public abstract class MenuItem {
+    private String name;
     private String size;//
     private String type;//crust for pizza, bread for sandwich, shell for taco
-    private String[] meets;
-    private String[] cheese;
-    private String[] regularToppings;
-    private String[] sauces;
+    private List<String> meats;
+    private List<String> cheeses;
+    private List<String> regularToppings;
+    private List<String> sauces;
+    private boolean isSpecial; //stuffed crust, toasted...
+    private double basePrice;
+    private double totalPrice;
 
-    public MenuItem(String size, String type, String[] meets, String[] cheese, String[] regularToppings, String[] sauces) {
+    public MenuItem(String name, String size, String type, double basePrice) {
+        this.name = name;
         this.size = size;
         this.type = type;
-        this.meets = meets;
-        this.cheese = cheese;
-        this.regularToppings = regularToppings;
-        this.sauces = sauces;
+        this.basePrice = basePrice;
+        this.meats = new ArrayList<>();
+        this.cheeses = new ArrayList<>();
+        this.regularToppings = new ArrayList<>();
+        this.sauces = new ArrayList<>();
+        this.isSpecial = false;
+        this.totalPrice = basePrice;
     }
 
-    public String getSize() {
-        return size;
+    //--- customizations----
+    public  void addMeats(String meat,double price){
+        meats.add(meat);
+        totalPrice+=price;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void addCheese(String cheese, double price){
+        cheeses.add(cheese);
+        totalPrice+=price;
     }
 
-    public String getType() {
-        return type;
+    public void addRegularTopping(String topping){
+        regularToppings.add(topping);
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void addSauce(String sauce){
+        sauces.add(sauce);
     }
 
-    public String[] getMeets() {
-        return meets;
+    public void applySpecial(double extraCoast){
+        isSpecial = true;
+        totalPrice+=extraCoast;
     }
 
-    public void setMeets(String[] meets) {
-        this.meets = meets;
+    public abstract void calculateTotal();
+
+    //getters and setters
+
+    public String getName() { return name; }
+    public String getSize() { return size; }
+    public String getType() { return type; }
+    public List<String> getMeats() { return meats; }
+    public List<String> getCheeses() { return cheeses; }
+    public List<String> getRegularToppings() { return regularToppings; }
+    public List<String> getSauces() { return sauces; }
+    public boolean isSpecial() { return isSpecial; }
+    public double getBasePrice() { return basePrice; }
+    public double getTotalPrice() { return totalPrice; }
+
+    public void setSize(String size) { this.size = size; }
+    public void setType(String type) { this.type = type; }
+    public void setSpecial(boolean special) { isSpecial = special; }
+
+    public void displayDetails() {
+        System.out.println("\n--- " + name.toUpperCase() + " DETAILS ---");
+        System.out.println("Size: " + size);
+        System.out.println("Type: " + type);
+        System.out.println("Meats: " + String.join(", ", meats));
+        System.out.println("Cheeses: " + String.join(", ", cheeses));
+        System.out.println("Regular Toppings: " + String.join(", ", regularToppings));
+        System.out.println("Sauces: " + String.join(", ", sauces));
+        System.out.println("Special: " + (isSpecial ? "Yes" : "No"));
+        System.out.printf("Total Price: $%.2f\n", totalPrice);
     }
 
-    public String[] getCheese() {
-        return cheese;
-    }
-
-    public void setCheese(String[] cheese) {
-        this.cheese = cheese;
-    }
-
-    public String[] getRegularToppings() {
-        return regularToppings;
-    }
-
-    public void setRegularToppings(String[] regularToppings) {
-        this.regularToppings = regularToppings;
-    }
-
-    public String[] getSauces() {
-        return sauces;
-    }
-
-    public void setSauces(String[] sauces) {
-        this.sauces = sauces;
-    }
 }

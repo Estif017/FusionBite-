@@ -3,6 +3,7 @@ package com.fusionBite.menu.pizzaMenu;
 import com.fusionBite.menu.MenuItem;
 import com.fusionBite.menu.MenuLoader;
 import com.fusionBite.menu.MenuUI;
+import com.fusionBite.utils.MenuHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -13,38 +14,28 @@ import java.util.*;
 
 //import static com.fusionBite.menu.MenuLoader.menuData;
 
-public class PizzaMenu extends MenuItem {
+public class PizzaMenu {
     private Scanner scanner = new Scanner(System.in);
-    public PizzaMenu(String size, String type, String[] meets, String[] cheese, String[] regularToppings, String[] sauces ) {
-        super(size, type, meets, cheese, regularToppings, sauces);
-    }
+
 
     public static void loadPizzaMenu(){
         MenuLoader.loadMenuData();
         Map<String,Object> pizzaMenu = MenuLoader.getSection("Pizza Menu");
-        if(pizzaMenu==null){
-            System.out.println("❌ Pizza menu could not be loaded. Check JSON file.");
-            return;
-        }
+        if(pizzaMenu==null) return;
+
         System.out.println("🍕 Pizza Menu:");
         System.out.println("-----------------------------");
 
-        Map<String, Object> orderDetails = new HashMap<>();
+        Map<String, Object> order = new HashMap<>();
         double totalPrice=0.0;
 
-        //--Size---
-        Map<String,Object> sizes = (Map<String, Object>) pizzaMenu.get("sizes");
-        System.out.println("Available Sizes");
-        for (String sizeKey:sizes.keySet()){
-            Map<String,Object> sizeDetails = (Map<String, Object>) sizes.get(sizeKey);//{basePrice=8.5, meatPrice=1.0, cheesePrice=0.75}
-            double basePrice = ((Number) sizeDetails.get("basePrice")).doubleValue();
-            System.out.printf("  %-4s - $%.2f%n", sizeKey, basePrice);
-        }
-
-        //--- Meats----
-        List<String> meats = (List<String>) pizzaMenu.get("meats");
-        System.out.println("\nPremium Meats: ");
-        System.out.println("  " + String.join(", ", meats));
+        //--- size ---
+        String chosenSize = MenuHelper.chooseSize(pizzaMenu,order);
+        Map<String,Object> sizes =  (Map<String, Object>) pizzaMenu.get("sizes");
+        Map<String,Object> sizeInfo = (Map<String, Object>) sizes.get(chosenSize);
+        totalPrice+=((Number)sizeInfo.get("basePrice")).doubleValue();
+        System.out.println(order);
+        System.out.println(totalPrice);
     }
 
 
