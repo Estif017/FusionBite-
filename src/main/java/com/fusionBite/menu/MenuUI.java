@@ -39,7 +39,7 @@ public class MenuUI {
             System.out.print("Enter your choice:");
             int choice = scanner.nextInt();
             switch (choice){
-                case 1 -> PizzaMenu.startOrder();
+                case 1 -> PizzaMenu.pizzaMenuScreen();
                 case 4 -> {
                     System.out.println("Exiting menu...");
                     running = false;
