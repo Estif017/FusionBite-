@@ -1,10 +1,10 @@
 package com.fusionBite.utils;
 
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 public class MenuHelper {
     private static Scanner scanner = new Scanner(System.in);
+
     public static String chooseSize(Map<String,Object> menuSection, Map<String,Object> orderDetails){
         Map<String,Object> sizes = (Map<String, Object>) menuSection.get("sizes");
         System.out.println("\n Choose Size: ");
@@ -28,5 +28,27 @@ public class MenuHelper {
         orderDetails.put("Size",choice);
         orderDetails.put("Base Price", basePrice);
         return choice;
+    }
+
+    public static List<String> chooseItems(String label, List<String> availableItems){
+        System.out.println("\nSelect " + label + " (comma-separated):");
+        System.out.println("  " + String.join(", ", availableItems));
+        System.out.print("Your choices: ");
+
+        String input = scanner.nextLine().trim().toLowerCase();
+        List<String> chosen = new ArrayList<>();
+        if(!input.isEmpty()){
+            for(String part : input.split(",")){
+                String item = part.trim();
+                if(availableItems.contains(item)) chosen.add(item);
+                else System.out.println("Ignoring invalid " + label + ": " + item);
+            }
+        }
+        return chosen;
+    }
+
+    public static double calculateExtraCost(int count,double perItemCost){
+        if (count <= 1) return 0;
+        return (count - 1) * perItemCost;
     }
 }

@@ -66,6 +66,7 @@
         "cheesePrice": 2.25
       }
     },
+    "crust": ["thin", "regular", "thick", "cauliflower"],
     "meats": ["pepperoni", "sausage", "ham", "bacon", "chicken", "meatball"],
     "cheeses": ["mozzarella", "parmesan", "ricotta", "goat cheese", "buffalo"],
     "regularToppings": ["onions", "mushrooms", "bell peppers", "olives", "tomatoes", "spinach", "basil", "pineapple", "anchovies"],
