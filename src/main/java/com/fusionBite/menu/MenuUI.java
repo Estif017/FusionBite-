@@ -3,9 +3,29 @@ package com.fusionBite.menu;
 import com.fusionBite.menu.pizzaMenu.PizzaMenu;
 import java.util.Scanner;
 
+import static com.fusionBite.utils.Utils.readNumber;
+
 public class MenuUI {
     static Scanner scanner = new Scanner(System.in);
 
+    public static void startApplication(){
+        System.out.println("Welcome to Fusion Bite!!!");
+        System.out.println("1) Start a new order");
+        System.out.println("0) Exit");
+        boolean running = true;
+        while (running){
+            int choice = readNumber(scanner,"Enter a number",Integer.class);
+            if(choice==1){
+                menu();
+            } else if (choice==0) {
+                System.out.println("Thank you for you visit, Have a good day!!!");
+                System.exit(0);
+            }else{
+                System.out.println("Invalid Input. try again (Enter 1 or 0)");
+            }
+        }
+
+    }
 
     public static void menu(){
         System.out.println("\tMenu");
