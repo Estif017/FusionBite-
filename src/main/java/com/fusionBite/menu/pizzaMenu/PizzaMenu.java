@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 
+import static com.fusionBite.utils.MenuHelper.displayProgress;
+
 //import static com.fusionBite.menu.MenuLoader.menuData;
 
 public class PizzaMenu {
@@ -24,8 +26,8 @@ public class PizzaMenu {
             return null;
         }
 
-        System.out.println("🍕 Pizza Menu:");
-        System.out.println("-----------------------------");
+        System.out.println("\n🍕 WELCOME TO FUSIONBITE PIZZA BUILDER");
+        System.out.println("─────────────────────────────────────");
 
         Map<String, Object> orderDetails = new LinkedHashMap<>();
         double totalPrice=0;
@@ -39,6 +41,9 @@ public class PizzaMenu {
         double meatPrice = ((Number)sizeInfo.get("meatPrice")).doubleValue();
         double cheesePrice = ((Number)sizeInfo.get("cheesePrice")).doubleValue();
 
+        Pizza pizza = new Pizza(chosenSize,"",basePrice,meatPrice,cheesePrice);
+        displayProgress(orderDetails,pizza.getTotalPrice());
+
        //-- Choose Crust ---
         List<String> crustOptions = (List<String>) pizzaMenu.get("crust");
         System.out.println("\nAvailable Crusts: " + String.join(", ", crustOptions));
@@ -48,35 +53,52 @@ public class PizzaMenu {
             System.out.println("⚠️ Invalid crust — defaulting to regular.");
             crustChoice = "regular";
         }
-
-        Pizza pizza = new Pizza(chosenSize,crustChoice,basePrice,meatPrice,cheesePrice);
+        pizza.setType(crustChoice);
+        orderDetails.put("Crust",crustChoice);
+        displayProgress(orderDetails,pizza.getTotalPrice());
 
         //-- stuffed Crust option
         System.out.print("Would you like stuffed crust (+$2.00)? (yes/no): ");
         if (scanner.nextLine().trim().equalsIgnoreCase("yes")) {
             pizza.addStuffedCrust();
+            orderDetails.put("Stuffed Crust", "Yes (+$2.00)");
+        }else{
+            orderDetails.put("Stuffed Crust", "No");
         }
+        displayProgress(orderDetails, pizza.getTotalPrice());
 
         //-- Add Meats ---
         List<String> meats = (List<String>) pizzaMenu.get("meats");
+        System.out.printf("\n🍗 Select meats for +$"+ meatPrice);
         List<String> chosenMeats = MenuHelper.chooseItems("meats",meats);
         for(String m: chosenMeats) pizza.addMeats(m,meatPrice);
-
+        orderDetails.put("Meats",chosenMeats.isEmpty()?"None":chosenMeats);
+        displayProgress(orderDetails,pizza.getTotalPrice());
         //--Add Cheeses
         List<String> cheeses = (List<String>) pizzaMenu.get("cheeses");
+        System.out.println("\n🧀 Select cheese for $"+cheesePrice);
         List<String> chosenCheeses = MenuHelper.chooseItems("cheeses",cheeses);
         for(String c: chosenCheeses) pizza.addCheese(c,cheesePrice);
+        orderDetails.put("Cheese",chosenCheeses.isEmpty()?"None":chosenCheeses);
+        displayProgress(orderDetails, pizza.getTotalPrice());
 
         //----Add Toppings ---
         List<String> toppings = (List<String>) pizzaMenu.get("regularToppings");
+        System.out.println("\n🥬 Select regular toppings (included, no extra cost)");
         List<String> chosenToppings = MenuHelper.chooseItems( "toppings", toppings);
         for (String t : chosenToppings) pizza.addRegularTopping(t);
+        orderDetails.put("Toppings", chosenToppings.isEmpty() ? "None" : chosenToppings);
+        displayProgress(orderDetails, pizza.getTotalPrice());
 
         // --- Add Sauces ---
         List<String> sauces = (List<String>) pizzaMenu.get("sauces");
+        System.out.println("\n🍅 Select sauces (included, no extra cost)");
         List<String> chosenSauces = MenuHelper.chooseItems( "sauces", sauces);
         for (String s : chosenSauces) pizza.addSauce(s);
-
+        orderDetails.put("Sauces", chosenSauces.isEmpty() ? "None" : chosenSauces);
+        displayProgress(orderDetails, pizza.getTotalPrice());
+        System.out.println("\n✅ Final Pizza Created!");
+        pizza.displayDetails();
         return pizza;
     }
 

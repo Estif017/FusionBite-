@@ -51,4 +51,14 @@ public class MenuHelper {
         if (count <= 1) return 0;
         return (count - 1) * perItemCost;
     }
+
+    public static void displayProgress(Map<String,Object> details, double price){
+        System.out.println("\n🧾 Current Order Status:");
+        System.out.println("-----------------------------");
+        for(Map.Entry<String,Object> entry : details.entrySet()){
+            System.out.printf("%-15s: %s%n", entry.getKey(), entry.getValue());
+        }
+        System.out.printf("💰 Current Price: $%.2f%n", price);
+        System.out.println("-----------------------------");
+    }
 }
