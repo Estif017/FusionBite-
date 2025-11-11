@@ -1,54 +1,18 @@
 package com.fusionBite.menu.pizzaMenu;
 
-import com.fusionBite.menu.MenuItem;
 import com.fusionBite.menu.MenuLoader;
-import com.fusionBite.menu.MenuUI;
-import com.fusionBite.utils.MenuHelper;
-import com.fusionBite.utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
-import java.io.FileReader;
-import java.io.IOException;
-import java.lang.reflect.Type;
+import com.fusionBite.utils.MenuHelper;
+
 import java.util.*;
 
 import static com.fusionBite.menu.pizzaMenu.PizzaUtils.*;
 import static com.fusionBite.utils.MenuHelper.displayProgress;
 
-//import static com.fusionBite.menu.MenuLoader.menuData;
 
 public class PizzaMenu {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void pizzaMenuScreen(){
-        boolean running = true;
-        while (running){
-            System.out.println("\n🍽️  Fusion Bite — Order Menu");
-            System.out.println("--------------------------------");
-            System.out.println("1) Add Pizza");
-            System.out.println("2) Add Drink");
-            System.out.println("3) Add Main Side");
-            System.out.println("4) Checkout");
-            System.out.println("5) Cancel Order");
-            System.out.println("0) Return to Home");
-            System.out.println("--------------------------------");
-            int choice = Utils.readNumber(scanner,"Enter a number: ", Integer.class);
-            switch (choice) {
-                case 1 -> startOrder();
-                case 2 -> addDrink();
-                case 3 -> addMainSide();
-                case 4 -> checkout();
-                case 5 -> cancelOrder();
-                case 0 -> {
-                    System.out.println("Returning to home...");
-                    MenuUI.startApplication();
-                    running = false;
-                }
-                default -> System.out.println("⚠️ Invalid input. Please enter a number between 0–5.");
-            }
-        }
-    }
     public static Pizza buildPizzaOrder(){
         MenuLoader.loadMenuData();
         Map<String,Object> pizzaMenu = MenuLoader.getSection("Pizza Menu");
@@ -133,8 +97,6 @@ public class PizzaMenu {
     }
 
 
-
-
     public static void startOrder(){
         Scanner scanner = new Scanner(System.in);
         double orderTotal = 0;
@@ -178,6 +140,7 @@ public class PizzaMenu {
             System.out.println("-----------------------------");
         }
         System.out.printf("Total Order Price: $%.2f\n", totalOrder);
-        MenuUI.menu();
+        System.out.println("would you like to add drink and sides?");
+        pizzaMenuScreen();
     }
 }

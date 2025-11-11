@@ -3,6 +3,8 @@ package com.fusionBite.menu;
 import com.fusionBite.menu.pizzaMenu.PizzaMenu;
 import java.util.Scanner;
 
+import static com.fusionBite.menu.drinksMenu.DrinkUI.drinkScreen;
+import static com.fusionBite.menu.pizzaMenu.PizzaUtils.pizzaMenuScreen;
 import static com.fusionBite.utils.Utils.readNumber;
 
 public class MenuUI {
@@ -28,19 +30,21 @@ public class MenuUI {
     }
 
     public static void menu(){
-        System.out.println("\tMenu");
-        System.out.println("1. Pizza");
-        System.out.println("2. Sandwich");
-        System.out.println("3. Taco");
-        System.out.println("4. Exit");
 
         boolean running = true;
         while(running){
+            System.out.println("\tMenu");
+            System.out.println("1. Pizza");
+            System.out.println("2. Sandwich");
+            System.out.println("3. Taco");
+            System.out.println("4. Drink");
+            System.out.println("0. Exit");
             System.out.print("Enter your choice:");
             int choice = scanner.nextInt();
             switch (choice){
-                case 1 -> PizzaMenu.pizzaMenuScreen();
-                case 4 -> {
+                case 1 -> pizzaMenuScreen();
+                case 4->drinkScreen();
+                case 0 -> {
                     System.out.println("Exiting menu...");
                     running = false;
                 }
