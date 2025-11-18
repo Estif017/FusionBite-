@@ -1,6 +1,8 @@
 package com.fusionBite.menu.sidesMenu;
 
-public class Side {
+import com.fusionBite.menu.order.Orderable;
+
+public class Side implements Orderable {
     private String name;
     private double price;
 
@@ -17,8 +19,13 @@ public class Side {
         this.name = name;
     }
 
+    @Override
     public double getPrice() {
         return price;
+    }
+
+    public String getDescription(){
+        return String.format("%s - $%.2f", name, price);
     }
 
     public void setPrice(double price) {

@@ -6,7 +6,7 @@ import com.fusionBite.utils.Utils;
 
 import java.util.*;
 
-import static com.fusionBite.menu.order.Order.getTotalDrinkPrice;
+import static com.fusionBite.menu.order.Order.*;
 
 
 public class DrinkUI {
@@ -47,15 +47,13 @@ public class DrinkUI {
             if (flavor.isEmpty()) flavor = "Regular";
 
              drink = new Drink(capitalize(chosenSize),capitalize(flavor),chosenPrice);
-            Order.addDrink(drink);
+            Order.addItem(drink);
 
-            System.out.println("\n✅ Drink added:");
-            System.out.printf("Size: %s | Flavor: %s | Price: $%.2f%n", drink.getSize(), drink.getFlavor(), drink.getPrice());
+            System.out.println("🎉 Added: "+drink.getDescription());
         }
         System.out.println("\n🧾 Current Drinks in Order:");
-        Order.displayDrinks();
-        getTotalDrinkPrice();
-        System.out.println("Total Orders : "+Order.calculateTotal());
+        Order.displayOrderSummary();
+        System.out.printf("\nTotal Order Price So Far: $%.2f%n", calculateTotal());
     }
 
     private static String capitalize(String s) {

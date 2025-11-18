@@ -36,31 +36,25 @@ public class SideUI {
             System.out.print("Enter side name exactly (e.g., Chips, Garlic Knots): ");
             String chosenSide = scanner.nextLine().trim().toLowerCase();
 
-            boolean isValid = false;
-            String actualSideName = null;
-
-            for(String sideKey:sideMenu.keySet()){
-                if(sideKey.equalsIgnoreCase(chosenSide)){
-                    actualSideName = sideKey;
-                    isValid = true;
-                    break;
-                }
-            }
+            String matchedSide = sideMenu.keySet().stream()
+                    .filter(key->key.equalsIgnoreCase(chosenSide))
+                    .findFirst()
+                    .orElse(null);
 
 
-            if (!isValid) {
+            if (matchedSide==null) {
                 System.out.println("⚠️ Invalid side — skipping.");
                 continue;
             }
 
-            double price = ((Number) sideMenu.get(actualSideName)).doubleValue();
+            double price = ((Number) sideMenu.get(matchedSide)).doubleValue();
 
-            Side side = new Side(actualSideName, price);
-            Order.addSides(side);
+            Side side = new Side(matchedSide, price);
+            Order.addItem(side);
 
-            System.out.printf("✅ %s added — $%.2f%n", actualSideName, price);
+            System.out.printf("✅ %s added — $%.2f%n", matchedSide, price);
         }
         System.out.println("\n🧾 Current Sides in Order:");
-        Order.displaySides();
+        Order.displayOrderSummary();
     }
 }

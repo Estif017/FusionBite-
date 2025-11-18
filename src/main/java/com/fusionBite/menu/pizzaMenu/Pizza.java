@@ -1,8 +1,9 @@
 package com.fusionBite.menu.pizzaMenu;
 
 import com.fusionBite.menu.MenuItem;
+import com.fusionBite.menu.order.Orderable;
 
-public class Pizza extends MenuItem {
+public class Pizza extends MenuItem implements Orderable {
     private boolean stuffedCrust;
     private double meatPrice;
     private double cheesePrice;
@@ -26,10 +27,42 @@ public class Pizza extends MenuItem {
         return stuffedCrust;
     }
 
-    @Override
-    public void calculateTotal(){
 
+    @Override
+    public void calculateTotal() {
+        double total = getBasePrice();
+
+        // Premium meats (size-based cost) - only charge *after first one*
+        if (getMeats() != null && !getMeats().isEmpty()) {
+            int extraMeatCount = Math.max(0, getMeats().size() - 1);
+            total += extraMeatCount * meatPrice;
+        }
+
+        // Premium cheeses (size-based cost) - only charge *after first one*
+        if (getCheeses() != null && !getCheeses().isEmpty()) {
+            int extraCheeseCount = Math.max(0, getCheeses().size() - 1);
+            total += extraCheeseCount * cheesePrice;
+        }
+
+        // Stuffed crust option
+        if (stuffedCrust) {
+            total += stuffedCrustPrice;
+        }
+
+        setTotalPrice(total);
     }
+
+    @Override
+    public double getPrice(){return getTotalPrice();}
+
+    @Override
+    public String getDescription(){
+        return String.format("%s %s Pizza with %s, %s | $%.2f",
+                getSize(), getType(), String.join(", ", getMeats()),
+                String.join(", ", getCheeses()), getTotalPrice());
+    }
+
+
 
     @Override
     public void displayDetails() {

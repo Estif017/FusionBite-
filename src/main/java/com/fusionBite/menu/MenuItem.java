@@ -28,6 +28,10 @@ public abstract class MenuItem {
         this.totalPrice = basePrice;
     }
 
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
     //--- customizations----
     public  void addMeats(String meat,double price){
         meats.add(meat);

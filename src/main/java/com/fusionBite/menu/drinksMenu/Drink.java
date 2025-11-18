@@ -1,6 +1,8 @@
 package com.fusionBite.menu.drinksMenu;
 
-public class Drink {
+import com.fusionBite.menu.order.Orderable;
+
+public class Drink  implements Orderable {
     private String size;
     private String flavor;
     private double price;
@@ -27,6 +29,7 @@ public class Drink {
         this.flavor = flavor;
     }
 
+    @Override
     public double getPrice() {
         return price;
     }
@@ -34,4 +37,11 @@ public class Drink {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String getDescription() {
+        return String.format("%s %s Drink - $%.2f",
+                size, flavor, price);
+    }
+
 }

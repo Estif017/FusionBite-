@@ -134,7 +134,7 @@ public class PizzaMenu {
             System.out.println("\n--- Pizza #" + i + " ---");
             Pizza pizza = buildPizzaOrder();
             pizzas.add(pizza);
-            Order.addPizza(pizza);
+            Order.addItem(pizza);
             totalOrder+=pizza.getTotalPrice();
         }
 
@@ -146,7 +146,6 @@ public class PizzaMenu {
             System.out.println("-----------------------------");
         }
         System.out.printf("Total Order Price: $%.2f\n", totalOrder);
-        PizzaUtils.updateLastPizzaBatchTotal(totalOrder);
         System.out.println("Total Orders : "+Order.calculateTotal());
         System.out.println("\nWould you like to add drinks or sides? (yes/no): ");
         String addExtras = scanner.nextLine().trim().toLowerCase();

@@ -8,15 +8,12 @@ import java.util.Scanner;
 
 import static com.fusionBite.menu.drinksMenu.DrinkUI.drinkScreen;
 import static com.fusionBite.menu.order.Order.clearOrder;
-import static com.fusionBite.menu.order.Order.displaySides;
 import static com.fusionBite.menu.pizzaMenu.PizzaMenu.startOrder;
 import static com.fusionBite.menu.sidesMenu.SideUI.sideMenu;
 
 public class PizzaUtils {
     static Scanner scanner = new Scanner(System.in);
-    private static double lastPizzaBatchTotal = 0;
     public static void pizzaMenuScreen(){
-        displayOrderBanner();
         boolean running = true;
         while (running){
             System.out.println("\n🍽️  Fusion Bite — Order Menu");
@@ -66,28 +63,5 @@ public class PizzaUtils {
         System.out.println("Canceling order...");
     }
 
-    public static void updateLastPizzaBatchTotal(double total){
-        lastPizzaBatchTotal = total;
-    }
 
-    public static void displayOrderBanner(){
-        if (Order.getPizzaCount() == 0) {
-            lastPizzaBatchTotal = 0;
-        }
-
-        if (Order.getPizzaCount() > 0) {
-            System.out.printf("#%d%n", Order.getPizzaCount());
-        }
-
-        if (lastPizzaBatchTotal > 0) {
-            System.out.printf("💰 Total Price: $%.2f%n", lastPizzaBatchTotal);
-        }
-
-        double aggregateTotal = Order.calculateTotal();
-        if (aggregateTotal > 0) {
-            System.out.printf("Total Order Price: $%.2f%n", aggregateTotal);
-            System.out.println("would you like to add drink and sides?");
-
-        }
-    }
 }
