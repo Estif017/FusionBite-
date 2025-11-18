@@ -2,8 +2,11 @@ package com.fusionBite.menu.pizzaMenu;
 
 import com.fusionBite.menu.MenuLoader;
 
+import com.fusionBite.menu.drinksMenu.DrinkUI;
 import com.fusionBite.menu.order.Order;
 import com.fusionBite.utils.MenuHelper;
+import com.fusionBite.utils.Utils;
+import jdk.jshell.execution.Util;
 
 import java.util.*;
 
@@ -134,7 +137,7 @@ public class PizzaMenu {
             totalOrder+=pizza.getTotalPrice();
         }
 
-        System.out.println("\"\\n=== ORDER SUMMARY ===\"");
+        System.out.println("\n=== ORDER SUMMARY ===");
         System.out.println("-----------------------------");
         for(int i = 0; i<pizzas.size();i++){
             System.out.println("🍕 Pizza #" + (i + 1));
@@ -142,8 +145,27 @@ public class PizzaMenu {
             System.out.println("-----------------------------");
         }
         System.out.printf("Total Order Price: $%.2f\n", totalOrder);
+        PizzaUtils.updateLastPizzaBatchTotal(totalOrder);
         System.out.println("Total Orders : "+Order.calculateTotal());
-        System.out.println("would you like to add drink and sides?");
-        pizzaMenuScreen();
+        System.out.println("\nWould you like to add drinks or sides? (yes/no): ");
+        String addExtras = scanner.nextLine().trim().toLowerCase();
+        while(addExtras.equals("yes")){
+            System.out.println("\nWhat would you like to add?");
+            System.out.println("1) Drink  |  2) Side  |  0) Done adding extras");
+
+            int extraChoice = Utils.readNumber(scanner,"Enter choice: ", Integer.class);
+            switch (extraChoice) {
+                case 1 -> DrinkUI.drinkScreen();
+//                case 2 -> SideUI.sideScreen();
+                case 0 -> {
+                    addExtras = "no"; // exit loop
+                    continue;
+                }
+                default -> System.out.println("⚠️ Invalid choice, try again.");
+            }
+
+            System.out.println("\nWould you like to add more drinks or sides? (yes/no): ");
+            addExtras = scanner.nextLine().trim().toLowerCase();
+        }
     }
 }

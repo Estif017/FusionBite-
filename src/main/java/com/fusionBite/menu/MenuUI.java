@@ -33,16 +33,17 @@ public class MenuUI {
 
         boolean running = true;
         while(running){
-            System.out.println("\tMenu");
+            System.out.println("\n\tMain Menu");
             System.out.println("1. Pizza");
-            System.out.println("2. Sandwich");
-            System.out.println("3. Taco");
+            System.out.println("2. Sandwich (Coming soon!)");
+            System.out.println("3. Taco (Coming soon!)");
             System.out.println("4. Drink");
             System.out.println("0. Exit");
             System.out.print("Enter your choice:");
             int choice = scanner.nextInt();
             switch (choice){
                 case 1 -> pizzaMenuScreen();
+                case 2,3 -> System.out.println("Sandwiches and tacos are coming soon! Please select another option.");
                 case 4->drinkScreen();
                 case 0 -> {
                     System.out.println("Exiting menu...");

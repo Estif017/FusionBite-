@@ -50,4 +50,23 @@ public class Order {
             System.out.println((i + 1) + ". " + drinks.get(i).getSize()+" "+drinks.get(i).getFlavor()+" "+drinks.get(i).getPrice());
         }
     }
+
+    public static int getPizzaCount(){
+        return pizzas.size();
+    }
+
+    public static int getDrinkCount(){
+        return pizzas.size();
+    }
+
+    public static int getSideCount(){
+        return pizzas.size();
+    }
+
+    public static void clearOrder() {
+        pizzas.clear();
+        drinks.clear();
+        sides.clear();
+        System.out.println("🗑️ Order cleared.");
+    }
 }
