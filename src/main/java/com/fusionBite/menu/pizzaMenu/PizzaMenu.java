@@ -2,6 +2,7 @@ package com.fusionBite.menu.pizzaMenu;
 
 import com.fusionBite.menu.MenuLoader;
 
+import com.fusionBite.menu.order.Order;
 import com.fusionBite.utils.MenuHelper;
 
 import java.util.*;
@@ -129,6 +130,7 @@ public class PizzaMenu {
             System.out.println("\n--- Pizza #" + i + " ---");
             Pizza pizza = buildPizzaOrder();
             pizzas.add(pizza);
+            Order.addPizza(pizza);
             totalOrder+=pizza.getTotalPrice();
         }
 
@@ -140,6 +142,7 @@ public class PizzaMenu {
             System.out.println("-----------------------------");
         }
         System.out.printf("Total Order Price: $%.2f\n", totalOrder);
+        System.out.println("Total Orders : "+Order.calculateTotal());
         System.out.println("would you like to add drink and sides?");
         pizzaMenuScreen();
     }

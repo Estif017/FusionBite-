@@ -55,6 +55,7 @@ public class DrinkUI {
         System.out.println("\n🧾 Current Drinks in Order:");
         Order.displayDrinks();
         getTotalDrinkPrice();
+        System.out.println("Total Orders : "+Order.calculateTotal());
     }
 
     private static String capitalize(String s) {

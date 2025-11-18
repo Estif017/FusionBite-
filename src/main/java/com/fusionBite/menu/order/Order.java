@@ -12,7 +12,7 @@ public class Order {
     private static List<Drink> drinks = new ArrayList<>();
     private static List<Side> sides = new ArrayList<>();
 
-    public double calculateTotal(){
+    public static double calculateTotal(){
         double total = 0;
         for(Pizza pizza: pizzas) total+=pizza.getTotalPrice();
         for (Drink drink: drinks) total+=drink.getPrice();
@@ -39,9 +39,10 @@ public class Order {
             for (Drink d : drinks){
                 totalPrice+=d.getPrice();
             }
-            System.out.println("- " +totalPrice);
+            System.out.println("- $" +totalPrice);
         }
     }
+
 
     public static void displayDrinks(){
         if(drinks.isEmpty()) System.out.println("No drinks added yet.");
