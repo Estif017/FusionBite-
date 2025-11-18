@@ -51,6 +51,16 @@ public class Order {
         }
     }
 
+    public static void displaySides() {
+        if (sides.isEmpty()) {
+            System.out.println("No sides added yet.");
+            return;
+        }
+        for (int i = 0; i < sides.size(); i++) {
+            System.out.println((i + 1) + ". " + sides.get(i));
+        }
+    }
+
     public static int getPizzaCount(){
         return pizzas.size();
     }

@@ -11,6 +11,7 @@ import jdk.jshell.execution.Util;
 import java.util.*;
 
 import static com.fusionBite.menu.pizzaMenu.PizzaUtils.*;
+import static com.fusionBite.menu.sidesMenu.SideUI.sideMenu;
 import static com.fusionBite.utils.MenuHelper.displayProgress;
 
 
@@ -156,7 +157,7 @@ public class PizzaMenu {
             int extraChoice = Utils.readNumber(scanner,"Enter choice: ", Integer.class);
             switch (extraChoice) {
                 case 1 -> DrinkUI.drinkScreen();
-//                case 2 -> SideUI.sideScreen();
+                case 2 -> sideMenu();
                 case 0 -> {
                     addExtras = "no"; // exit loop
                     continue;

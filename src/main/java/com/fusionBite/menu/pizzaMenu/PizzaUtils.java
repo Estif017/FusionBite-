@@ -8,7 +8,9 @@ import java.util.Scanner;
 
 import static com.fusionBite.menu.drinksMenu.DrinkUI.drinkScreen;
 import static com.fusionBite.menu.order.Order.clearOrder;
+import static com.fusionBite.menu.order.Order.displaySides;
 import static com.fusionBite.menu.pizzaMenu.PizzaMenu.startOrder;
+import static com.fusionBite.menu.sidesMenu.SideUI.sideMenu;
 
 public class PizzaUtils {
     static Scanner scanner = new Scanner(System.in);
@@ -28,7 +30,7 @@ public class PizzaUtils {
             switch (choice) {
                 case 1 -> startOrder();
                 case 2 -> drinkScreen();
-                case 3 -> addMainSide();
+                case 3 -> sideMenu();
                 case 4 -> checkout();
                 case 5 -> {
                     cancelOrder();
@@ -57,9 +59,7 @@ public class PizzaUtils {
     public static void addDrink(){
         System.out.println("Adding drink");
     }
-    public static void addMainSide(){
-        System.out.println("Adding main side");
-    }
+
     public static void checkout(){
         System.out.println("Checking out...");
     }public static void cancelOrder(){
