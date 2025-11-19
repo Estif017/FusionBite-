@@ -17,7 +17,6 @@ public class MenuUI {
         boolean running = true;
         while (running){
             int choice = readNumber(scanner,"Enter a number: ",Integer.class);
-            scanner.nextLine();
             if(choice==1){
                 menu();
             } else if (choice==0) {

@@ -111,20 +111,8 @@ public class PizzaMenu {
         scanner.nextLine();
 
         if(pizzaCount==0){
-            System.out.println("You must order garlic knots or a drink if you order no pizzas.");
-            System.out.print("Would you like garlic knots ($4.00) or a drink ($2.50)? ");
-            String item = scanner.nextLine().trim().toLowerCase();
-            if(item.contains("garlic")){
-                orderTotal+=4.00;
-                System.out.println("Added garlic knots to your order.");
-            } else if (item.contains("drink")) {
-                orderTotal+=2.50;
-                System.out.println("Added drink to your order.");
-            }else{
-                System.out.println("Invalid choice — no order placed.");
-                return;
-            }
-            System.out.printf("Order total: $%.2f\n", orderTotal);
+            System.out.println("You must order at least one drink or side if you order no pizzas.");
+            enforceNonPizzaSelection(scanner);
             return;
         }
         //If customer orders pizzas
@@ -168,5 +156,34 @@ public class PizzaMenu {
             addExtras = scanner.nextLine().trim().toLowerCase();
         }
         checkout();
+    }
+
+    public static void enforceNonPizzaSelection(Scanner scanner){
+        int startingItems = Order.getItemCount();
+        while (true){
+            System.out.println("\nPlease choose an option to continue your order:");
+            System.out.println("1) Add Drink");
+            System.out.println("2) Add Main Side");
+            System.out.println("0) Cancel Order");
+
+            int choice = Utils.readNumber(scanner, "Enter choice: ", Integer.class);
+            switch (choice) {
+                case 1 -> DrinkUI.drinkScreen();
+                case 2 -> sideMenu();
+                case 0 -> {
+                    System.out.println("No pizzas or extras added. Returning to order menu.");
+                    return;
+                }
+                default -> {
+                    System.out.println("⚠️ Invalid selection. Please choose 0, 1, or 2.");
+                    continue;
+                }
+            }
+            if(Order.getItemCount()>startingItems){
+                System.out.println("✅ Thanks! You added an item so your order can continue.");
+                return;
+            }
+            System.out.println("⚠️ No items were added. Please add at least one drink or side.");
+        }
     }
 }
