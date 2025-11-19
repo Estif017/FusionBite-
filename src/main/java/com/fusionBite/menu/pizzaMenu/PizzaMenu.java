@@ -158,8 +158,8 @@ public class PizzaMenu {
                 case 1 -> DrinkUI.drinkScreen();
                 case 2 -> sideMenu();
                 case 0 -> {
-                    addExtras = "no"; // exit loop
-                    continue;
+                    checkout();
+                    return;
                 }
                 default -> System.out.println("⚠️ Invalid choice, try again.");
             }
@@ -167,5 +167,6 @@ public class PizzaMenu {
             System.out.println("\nWould you like to add more drinks or sides? (yes/no): ");
             addExtras = scanner.nextLine().trim().toLowerCase();
         }
+        checkout();
     }
 }

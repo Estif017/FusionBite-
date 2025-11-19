@@ -1,5 +1,6 @@
 package com.fusionBite.menu.pizzaMenu;
 
+import com.fusionBite.menu.CheckoutUI;
 import com.fusionBite.menu.MenuUI;
 import com.fusionBite.menu.order.Order;
 import com.fusionBite.utils.Utils;
@@ -59,6 +60,7 @@ public class PizzaUtils {
 
     public static void checkout(){
         System.out.println("Checking out...");
+        CheckoutUI.checkoutScreen();
     }public static void cancelOrder(){
         System.out.println("Canceling order...");
     }

@@ -1,16 +1,9 @@
 package com.fusionBite.menu.order;
 
-import com.fusionBite.menu.drinksMenu.Drink;
-import com.fusionBite.menu.pizzaMenu.Pizza;
-import com.fusionBite.menu.sidesMenu.Side;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class Order {
-//    private static List<Pizza> pizzas = new ArrayList<>();
-//    private static List<Drink> drinks = new ArrayList<>();
-//    private static List<Side> sides = new ArrayList<>();
     private static final List<Orderable> items = new ArrayList<>();
 
     public static void addItem(Orderable item){
